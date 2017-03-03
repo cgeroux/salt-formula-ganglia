@@ -47,7 +47,7 @@ udp_send_channel {
                        # this, the metrics may appear to come from any
                        # interface and the DNS names associated with
                        # those IPs will be used to create the RRDs.
-  mcast_join = {{ mcast_join }}
+  host = {{ mcast_join }}
   port = 8649
   ttl = 1
 }

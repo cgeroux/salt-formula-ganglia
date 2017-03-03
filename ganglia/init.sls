@@ -57,13 +57,24 @@ gmetad:
    - context:
      mcast_join: localhost
 
-#restart ganglia-monitor
+copy_apache_conf:
+  cmd.run:
+  - name: cp /etc/ganglia-webfrontend/apache.conf /etc/apache2/sites-enabled/ganglia.conf
+
+restart_apache:
+  cmd.run:
+  - name: service apache2 restart
+
+restart_gmetad:
+  cmd.run:
+  - name: service gmetad restart
+
 restart_ganglia_monitor_master:
   cmd.run:
   - name: service ganglia-monitor restart
+
 {% else%}
 
-#configure gmond.conf
 /etc/ganglia/gmond.conf:
   file.managed:
    - source: salt://ganglia/files/gmond-default-slave.conf.jinja
@@ -73,10 +84,10 @@ restart_ganglia_monitor_master:
    - context:
      mcast_join: 192.168.220.129
 
-#restart ganglia-monitor
 wait_60:
   cmd.run:
   - name: sleep 60
+
 restart_ganglia_monitor:
   cmd.run:
   - name: service ganglia-monitor restart
