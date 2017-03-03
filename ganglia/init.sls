@@ -58,30 +58,27 @@ gmetad:
      mcast_join: localhost
 
 #restart ganglia-monitor
-ganglia-monitor_service:
-  service.running:
-    - name: ganglia-monitor
-    - enable: True
-    - reload: True
-    - init_delay: 60
+restart_ganglia_monitor_master:
+  cmd.run:
+  - name: service ganglia-monitor restart
 {% else%}
 
 #configure gmond.conf
 /etc/ganglia/gmond.conf:
   file.managed:
-   - name: 
    - source: salt://ganglia/files/gmond-default-slave.conf.jinja
    - template: jinja
    - user: root
    - group: root
    - context:
-     mcast_join: hs-master
+     mcast_join: 192.168.220.129
 
 #restart ganglia-monitor
-ganglia-monitor_service:
-  service.running:
-    - name: ganglia-monitor
-    - enable: True
-    - reload: True
+wait_60:
+  cmd.run:
+  - name: sleep 10
+restart_ganglia_monitor:
+  cmd.run:
+  - name: service ganglia-monitor restart
 {% endif %}
 
