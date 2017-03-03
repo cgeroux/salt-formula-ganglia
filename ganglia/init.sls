@@ -49,7 +49,7 @@ gmetad:
 #ensure a directory is available for gmond-default.conf
 /etc/ganglia/gmond.conf:
   file.managed:
-   - source: /srv/salt/formulas/ganglia-formula/ganglia/files/gmond-default.conf.jinja:
+   - source: salt://ganglia/files/gmond-default-master.conf.jinja
    - template: jinja
    - mode: 644
    - user: root
@@ -58,8 +58,9 @@ gmetad:
      mcast_join: localhost
 
 #restart ganglia-monitor
-ganglia-monitor:
+ganglia-monitor_service:
   service.running:
+    - name: ganglia-monitor
     - enable: True
     - reload: True
     - init_delay: 60
@@ -69,7 +70,7 @@ ganglia-monitor:
 /etc/ganglia/gmond.conf:
   file.managed:
    - name: 
-   - source: /srv/salt/formulas/ganglia-formula/ganglia/files/gmond-default.conf.jinja:
+   - source: salt://ganglia/files/gmond-default-slave.conf.jinja
    - template: jinja
    - user: root
    - group: root
@@ -77,8 +78,9 @@ ganglia-monitor:
      mcast_join: hs-master
 
 #restart ganglia-monitor
-ganglia-monitor:
+ganglia-monitor_service:
   service.running:
+    - name: ganglia-monitor
     - enable: True
     - reload: True
 {% endif %}
