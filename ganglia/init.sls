@@ -76,7 +76,7 @@ restart_ganglia_monitor_master:
 #restart ganglia-monitor
 wait_60:
   cmd.run:
-  - name: sleep 10
+  - name: sleep 60
 restart_ganglia_monitor:
   cmd.run:
   - name: service ganglia-monitor restart
