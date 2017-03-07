@@ -82,7 +82,7 @@ restart_ganglia_monitor_master:
    - user: root
    - group: root
    - context:
-     mcast_join: 192.168.220.129
+     mcast_join: hs-master
 
 wait_60:
   cmd.run:
